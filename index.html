@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Special Question</title>
+    <style>
+        body {
+            height: 100vh;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #e6e6fa, #9370db);
+            font-family: 'arial', sans-serif;
+            overflow: hidden;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100' fill='none'%3E%3Cpath d='M50 20C45 15 35 15 30 25C25 35 40 45 50 40C60 45 75 35 70 25C65 15 55 15 50 20Z' fill='white' fill-opacity='0.1'/%3E%3Cpath d='M30 60C25 55 15 55 10 65C5 75 20 85 30 80C40 85 55 75 50 65C45 55 35 55 30 60Z' fill='white' fill-opacity='0.1'/%3E%3Cpath d='M70 60C65 55 55 55 50 65C45 75 60 85 70 80C80 85 95 75 90 65C85 55 75 55 70 60Z' fill='white' fill-opacity='0.1'/%3E%3C/svg%3E"),
+                          url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='100' viewBox='0 0 60 100' fill='none'%3E%3Cpath d='M30 10L40 30L30 45L20 30L30 10Z' fill='white' fill-opacity='0.1'/%3E%3Cpath d='M30 45C35 45 40 50 40 55C40 65 30 70 30 70C30 70 20 65 20 55C20 50 25 45 30 45Z' fill='white' fill-opacity='0.1'/%3E%3C/svg%3E");
+            background-size: 150px, 100px;
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 2rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 25px rgba(147, 112, 219, 0.3);
+            text-align: center;
+            position: relative;
+            max-width: 80%;
+            border: 2px solid #9370db;
+        }
+
+        h1 {
+            color: #663399;
+            margin-bottom: 2rem;
+            font-size: 2em;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            margin-top: 2rem;
+        }
+
+        .btn {
+            padding: 15px 40px;
+            font-size: 1.2em;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+            background: linear-gradient(45deg, #9370db, #663399);
+            color: white;
+            font-weight: bold;
+        }
+
+        .btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(147, 112, 219, 0.4);
+        }
+
+        #no-btn {
+            position: absolute;
+        }
+
+        .thank-you {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.98);
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            z-index: 1000;
+            animation: fadeIn 0.5s ease-in;
+            padding: 20px;
+            overflow-y: auto;
+        }
+
+        .message-container {
+            max-width: 800px;
+            margin: 20px;
+            padding: 30px;
+            background: rgba(230, 230, 250, 0.9);
+            border-radius: 20px;
+            box-shadow: 0 5px 15px rgba(147, 112, 219, 0.3);
+            border: 2px solid #9370db;
+            text-align: center;
+            line-height: 1.8;
+            font-size: 1.2em;
+            font-family: 'cursive', monospace;
+            color: #4B0082;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .heart {
+            color: #9370db;
+            font-size: 5em;
+            animation: pulse 1s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+            100% { transform: scale(1); }
+        }
+
+        .thank-you h2 {
+            color: #663399;
+            font-size: 2.5em;
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        .music-control {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 15px;
+            border-radius: 50%;
+            cursor: pointer;
+            box-shadow: 0 2px 5px rgba(147, 112, 219, 0.3);
+            z-index: 1001;
+            transition: transform 0.3s ease;
+            border: 2px solid #9370db;
+        }
+
+        .music-control:hover {
+            transform: scale(1.1);
+        }
+
+        .music-icon {
+            font-size: 24px;
+        }
+
+        .heart-rain {
+            position: absolute;
+            animation: falling linear infinite;
+            color: #9370db;
+            opacity: 0.6;
+        }
+
+        @keyframes falling {
+            0% {
+                transform: translateY(-10%) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="music-control" onclick="toggleMusic()">
+        <span class="music-icon" id="musicIcon">🔇</span>
+    </div>
+
+    <audio id="background-music" loop>
+        <source src= "Audio de WhatsApp 2024-11-24 a las 20.03.04_7c9b099a.dat.unknown" type="audio/mp3">
+    </audio>
+
+    <div class="container">
+        <h1>¿Quieres ser mi novia? 💜</h1>
+        <div class="buttons">
+            <button class="btn" id="yes-btn">Sí</button>
+            <button class="btn" id="no-btn">No</button>
+        </div>
+    </div>
+
+    <div class="thank-you" id="thank-you">
+        <div class="heart">💜</div>
+        <h2>¡Gracias por decir que sí! 💜</h2>
+        <div class="message-container">
+            Gracias desde lo más profundo de mi corazón, te doy las gracias por darme la oportunidad de ser tu novio. Saber que confías en mí para compartir esta etapa de tu vida es un privilegio que valoro más de lo que las palabras podrían expresar. Prometo que cada día me esforzaré por cuidarte, por ser un refugio donde siempre te sientas segura y amada. Quiero ser la razón de tus sonrisas, alguien que sume alegría a tu vida y que esté a tu lado en los momentos buenos y en los difíciles. No puedo prometer que seré perfecto, pero sí puedo asegurarte que daré lo mejor de mí para construir algo especial contigo. Mi meta es verte feliz y apoyarte en todo lo que desees lograr. Gracias por ser tú, por creer en nosotros y por dejarme ser parte de tu vida.
+        </div>
+    </div>
+
+    <script>
+        const noBtn = document.getElementById('no-btn');
+        const yesBtn = document.getElementById('yes-btn');
+        const thankYou = document.getElementById('thank-you');
+        const backgroundMusic = document.getElementById('background-music');
+        const musicIcon = document.getElementById('musicIcon');
+        let isMusicPlaying = false;
+
+        function toggleMusic() {
+            if (isMusicPlaying) {
+                backgroundMusic.pause();
+                musicIcon.textContent = '🔇';
+            } else {
+                backgroundMusic.play();
+                musicIcon.textContent = '🔊';
+            }
+            isMusicPlaying = !isMusicPlaying;
+        }
+
+        function moveButton() {
+            const maxX = window.innerWidth - noBtn.offsetWidth;
+            const maxY = window.innerHeight - noBtn.offsetHeight;
+            
+            const randomX = Math.random() * maxX;
+            const randomY = Math.random() * maxY;
+            
+            noBtn.style.position = 'fixed';
+            noBtn.style.left = randomX + 'px';
+            noBtn.style.top = randomY + 'px';
+            noBtn.style.transition = 'all 0.2s ease';
+        }
+
+        function createHeart() {
+            const heart = document.createElement('div');
+            heart.innerHTML = '💜';
+            heart.className = 'heart-rain';
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.fontSize = Math.random() * (30 - 10) + 10 + 'px';
+            heart.style.animationDuration = Math.random() * (10 - 5) + 5 + 's';
+            document.body.appendChild(heart);
+
+            setTimeout(() => {
+                heart.remove();
+            }, 10000);
+        }
+
+        noBtn.addEventListener('mouseover', moveButton);
+        noBtn.addEventListener('touchstart', moveButton);
+
+        yesBtn.addEventListener('click', () => {
+            thankYou.style.display = 'flex';
+            if (!isMusicPlaying) {
+                toggleMusic();
+            }
+            setInterval(createHeart, 300);
+        });
+    </script>
+</body>
+</html>
